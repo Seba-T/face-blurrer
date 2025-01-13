@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Dataset
+#data/raw/
+#data/processed/
+
+# Ambiente virtuale
+venv/
