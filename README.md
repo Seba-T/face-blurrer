@@ -10,3 +10,13 @@ A Python project to detect faces using the Viola-Jones algorithm and apply blurr
 ```bash
 pip install -r requirements.txt
 ```
+
+## YOLO Usage 
+
+To use the YOLO model, you need to run the get_yolo_model.py script. This script handles downloading the required model weights and unzipping the files. Make sure all dependencies are installed.
+
+Run the script to download and set up the YOLO model:
+```bash
+python get_yolo_model.py
+```
+Once the setup is complete, the YOLO model will be ready for use in the face detection project.

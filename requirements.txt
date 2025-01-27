@@ -3,3 +3,6 @@ numpy
 matplotlib
 ipykernel
 jupyter
+requests
+zipfile
+gdown
