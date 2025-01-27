@@ -11,3 +11,7 @@ data/processed/
 
 # Ambiente virtuale
 .venv
+
+# YOLO model
+YOLO_Face.h5
+yolov3-wider_16000.weights
