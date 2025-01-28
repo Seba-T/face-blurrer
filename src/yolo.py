@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from utils import blur_faces
 
 def load_yolo_model(cfg_path, weights_path, names_path):
     """
@@ -77,3 +78,52 @@ def detect_faces_yolo(image, net, output_layers, conf_threshold=0.5, nms_thresho
             final_boxes.append(boxes[i])
 
     return final_boxes
+
+
+
+def process_video_yolo(input_path, output_path, cfg_path, weights_path, names_path, blur_method="gaussian"):
+    """
+    Processes a video to detect and blur faces frame by frame using YOLO.
+
+    Args:
+        input_path (str): Path to the input video.
+        output_path (str): Path to the output video.
+        cfg_path (str): Path to the YOLO configuration file.
+        weights_path (str): Path to the YOLO weights file.
+        names_path (str): Path to the YOLO names file.
+        blur_method (str): Blurring method ('gaussian', 'pixelation', 'median').
+    """
+    # Load the YOLOv3 model
+    yolo_net, yolo_classes = load_yolo_model(cfg_path, weights_path, names_path)
+    output_layers = yolo_net.getUnconnectedOutLayersNames()
+
+    # Open the video file
+    video_capture = cv2.VideoCapture(input_path)
+    fps = int(video_capture.get(cv2.CAP_PROP_FPS))
+    frame_width = int(video_capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+    frame_height = int(video_capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    frame_size = (frame_width, frame_height)
+
+    # Define the codec and create VideoWriter object
+    fourcc = cv2.VideoWriter_fourcc(*"XVID")  # Codec for the output video
+    video_writer = cv2.VideoWriter(output_path, fourcc, fps, frame_size)
+
+    while video_capture.isOpened():
+        ret, frame = video_capture.read()
+        if not ret:
+            break  # No more frames to read
+
+        # Face detection using YOLO
+        detected_faces = detect_faces_yolo(frame, yolo_net, output_layers)
+
+        # Apply the blur method to the detected faces
+        processed_frame = blur_faces(frame, detected_faces, blur_method)
+
+        # Write the processed frame to the output video
+        video_writer.write(processed_frame)
+
+    # Release resources
+    video_capture.release()
+    video_writer.release()
+    cv2.destroyAllWindows()
+    print(f"Processed video saved at: {output_path}")

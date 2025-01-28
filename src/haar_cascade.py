@@ -1,6 +1,28 @@
 import cv2
-from blurring import blur_faces
+from utils import blur_faces
 
+# Function to detect faces
+def detect_faces(image):
+    # Path to the Haar Cascade file
+    haar_cascade_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+
+    # Create the face detector
+    face_cascade = cv2.CascadeClassifier(haar_cascade_path)
+
+    # Convert the image to grayscale (required by the Haar algorithm)
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    
+    # Detect faces
+    faces = face_cascade.detectMultiScale(
+        gray_image,       # Grayscale image
+        scaleFactor=1.1,  # Scale reduction factor
+        minNeighbors=5,   # Minimum number of neighbors per detection rectangle
+        minSize=(30, 30)  # Minimum face size
+    )
+    return faces
+
+
+# Function to process a video
 def process_video(input_path, output_path, face_cascade_path, blur_method="gaussian"):
     """
     Processes a video to detect and blur faces frame by frame.
@@ -37,6 +59,10 @@ def process_video(input_path, output_path, face_cascade_path, blur_method="gauss
         # Apply the blur method to the faces
         if blur_method == "gaussian":
             processed_frame = blur_faces(frame, faces)
+        elif blur_method == "pixelation":
+            processed_frame = blur_faces(frame, faces, "pixelation")
+        elif blur_method == "median":
+            processed_frame = blur_faces(frame, faces, "median")
         else:
             raise ValueError("Blurring effect not valid. Use 'gaussian'.")
 
@@ -47,3 +73,4 @@ def process_video(input_path, output_path, face_cascade_path, blur_method="gauss
     video_capture.release()
     video_writer.release()
     print(f"Processed video saved at: {output_path}")
+

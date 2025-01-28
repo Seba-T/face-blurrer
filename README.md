@@ -13,10 +13,10 @@ pip install -r requirements.txt
 
 ## YOLO Usage 
 
-To use the YOLO model, you need to run the get_yolo_model.py script. This script handles downloading the required model weights and unzipping the files. Make sure all dependencies are installed.
+To use the YOLO model, you need to run the get_yolo_models.py script. This script handles downloading the required model weights and unzipping the files. Make sure all dependencies are installed.
 
 Run the script to download and set up the YOLO model:
 ```bash
-python get_yolo_model.py
+python get_yolo_models.py
 ```
 Once the setup is complete, the YOLO model will be ready for use in the face detection project.
