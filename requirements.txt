@@ -6,3 +6,4 @@ jupyter
 requests
 zipfile
 gdown
+scipy

@@ -1,0 +1,64 @@
+=== Viola-Jones Haar Trained Face Detection Evaluation ===
+Scale-Factor: 1.1
+minNeighbour: 5
+
+Total Ground Truth Faces: 39708
+Total Detected Faces: 7696
+True Positives: 5116
+False Positives: 2580
+False Negatives: 34592
+Precision: 0.6648
+Recall: 0.1288
+Average IoU: 0.6873
+
+[runlim] time:                  3311.02 seconds
+[runlim] space:                 326.8 MB
+
+
+=== Viola-Jones Haar Trained Face Detection Evaluation ===
+Scale-Factor: 1.05
+minNeighbour: 3
+
+Total Ground Truth Faces: 39708
+Total Detected Faces: 18406
+True Positives: 6499
+False Positives: 11907
+False Negatives: 33209
+Precision: 0.3531
+Recall: 0.1637
+Average IoU: 0.6817
+
+[runlim] time:                  6591.69 seconds
+[runlim] space:                 511.3 MB
+
+=== Viola-Jones Haar Trained Face Detection Evaluation ===
+Scale-Factor: 1.07
+minNeighbour: 4
+
+Total Ground Truth Faces: 39708
+Total Detected Faces: 11505
+True Positives: 5803
+False Positives: 5702
+False Negatives: 33905
+Precision: 0.5044
+Recall: 0.1461
+Average IoU: 0.6848
+
+[runlim] time:                  4693.72 seconds
+[runlim] space:                 404.7 MB
+
+=== Viola-Jones Haar Trained Face Detection Evaluation ===
+Scale-Factor: 1.15
+minNeighbour: 3
+
+Total Ground Truth Faces: 39708
+Total Detected Faces: 8965
+True Positives: 5377
+False Positives: 3588
+False Negatives: 34331
+Precision: 0.5998
+Recall: 0.1354
+Average IoU: 0.6868
+
+[runlim] time:                  2577.52 seconds
+[runlim] space:                 275.8 MB

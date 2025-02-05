@@ -1,0 +1,49 @@
+=== YOLO Face Detection Evaluation ===
+conf_threshold=0.5
+nms_threshold=0.4
+
+Total Ground Truth Faces: 39708
+Total Detected Faces: 23383
+True Positives: 18452
+False Positives: 4931
+False Negatives: 21256
+Precision: 0.7891
+Recall: 0.4647
+Average IoU: 0.7306
+
+[runlim] time:                  8672.24 seconds
+[runlim] space:                 1824.3 MB
+
+
+=== YOLO Face Detection Evaluation ===
+conf_threshold=0.4
+nms_threshold=0.5
+
+Total Ground Truth Faces: 39708
+Total Detected Faces: 27227
+True Positives: 19706
+False Positives: 7521
+False Negatives: 20002
+Precision: 0.7238
+Recall: 0.4963
+Average IoU: 0.7244
+
+[runlim] time:                  8748.73 seconds
+[runlim] space:                 1823.1 MB
+
+
+=== YOLO Face Detection Evaluation ===
+conf_threshold=0.6
+nms_threshold=0.6
+
+Total Ground Truth Faces: 39708
+Total Detected Faces: 21560
+True Positives: 18203
+False Positives: 3357
+False Negatives: 21505
+Precision: 0.8443
+Recall: 0.4584
+Average IoU: 0.7322
+
+[runlim] time:                  8758.98 seconds
+[runlim] space:                 1823.7 MB
