@@ -11,7 +11,7 @@ Precision: 0.6648
 Recall: 0.1288
 Average IoU: 0.6873
 
-[runlim] time:                  3311.02 seconds
+[runlim] time:                  3311.02 seconds -> 514.82 real seconds
 [runlim] space:                 326.8 MB
 
 
@@ -28,7 +28,7 @@ Precision: 0.3531
 Recall: 0.1637
 Average IoU: 0.6817
 
-[runlim] time:                  6591.69 seconds
+[runlim] time:                  6591.69 seconds -> 1024.93 real seconds
 [runlim] space:                 511.3 MB
 
 === Viola-Jones Haar Trained Face Detection Evaluation ===
@@ -44,7 +44,7 @@ Precision: 0.5044
 Recall: 0.1461
 Average IoU: 0.6848
 
-[runlim] time:                  4693.72 seconds
+[runlim] time:                  4693.72 seconds -> 729.82 real seconds
 [runlim] space:                 404.7 MB
 
 === Viola-Jones Haar Trained Face Detection Evaluation ===
@@ -60,5 +60,5 @@ Precision: 0.5998
 Recall: 0.1354
 Average IoU: 0.6868
 
-[runlim] time:                  2577.52 seconds
+[runlim] time:                  2571.51 seconds -> 387.33 real seconds
 [runlim] space:                 275.8 MB

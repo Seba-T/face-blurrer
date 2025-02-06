@@ -11,7 +11,7 @@ Precision: 0.7891
 Recall: 0.4647
 Average IoU: 0.7306
 
-[runlim] time:                  8672.24 seconds
+[runlim] time:                  8672.24 seconds -> 1348.42 real seconds
 [runlim] space:                 1824.3 MB
 
 
@@ -28,7 +28,7 @@ Precision: 0.7238
 Recall: 0.4963
 Average IoU: 0.7244
 
-[runlim] time:                  8748.73 seconds
+[runlim] time:                  8748.73 seconds -> 1360.32 real seconds
 [runlim] space:                 1823.1 MB
 
 
@@ -45,5 +45,5 @@ Precision: 0.8443
 Recall: 0.4584
 Average IoU: 0.7322
 
-[runlim] time:                  8758.98 seconds
+[runlim] time:                  8758.98 seconds -> 1362.07 real seconds
 [runlim] space:                 1823.7 MB
