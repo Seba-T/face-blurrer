@@ -4,6 +4,5 @@ matplotlib
 ipykernel
 jupyter
 requests
-zipfile
 gdown
 scipy
