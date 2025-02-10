@@ -1,23 +1,24 @@
 import cv2
 from utils import blur_faces
 
+
 # Function to detect faces
 def detect_faces(image):
     # Path to the Haar Cascade file
-    haar_cascade_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+    haar_cascade_path = "../viola-johnes-classifier/.xml"
 
     # Create the face detector
     face_cascade = cv2.CascadeClassifier(haar_cascade_path)
 
     # Convert the image to grayscale (required by the Haar algorithm)
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    
+
     # Detect faces
     faces = face_cascade.detectMultiScale(
-        gray_image,       # Grayscale image
+        gray_image,  # Grayscale image
         scaleFactor=1.1,  # Scale reduction factor
-        minNeighbors=5,   # Minimum number of neighbors per detection rectangle
-        minSize=(30, 30)  # Minimum face size
+        minNeighbors=5,  # Minimum number of neighbors per detection rectangle
+        minSize=(30, 30),  # Minimum face size
     )
     return faces
 
@@ -26,7 +27,7 @@ def detect_faces(image):
 def process_video(input_path, output_path, face_cascade_path, blur_method="gaussian"):
     """
     Processes a video to detect and blur faces frame by frame.
-    
+
     Args:
         input_path (str): Path to the input video.
         output_path (str): Path to the output video.
@@ -54,7 +55,9 @@ def process_video(input_path, output_path, face_cascade_path, blur_method="gauss
 
         # Find faces in frames
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        faces = face_cascade.detectMultiScale(gray_frame, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+        faces = face_cascade.detectMultiScale(
+            gray_frame, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30)
+        )
 
         # Apply the blur method to the faces
         if blur_method == "gaussian":
@@ -73,4 +76,3 @@ def process_video(input_path, output_path, face_cascade_path, blur_method="gauss
     video_capture.release()
     video_writer.release()
     print(f"Processed video saved at: {output_path}")
-

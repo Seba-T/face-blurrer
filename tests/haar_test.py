@@ -3,6 +3,7 @@ import numpy as np
 import os
 import scipy.io
 
+
 # Function to compute Intersection over Union (IoU) between two bounding boxes
 def compute_iou(boxA, boxB):
     # Compute intersection coordinates
@@ -22,8 +23,9 @@ def compute_iou(boxA, boxB):
     iou = interArea / float(boxAArea + boxBArea - interArea)
     return iou
 
+
 # Load Viola-Jones
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+face_cascade = cv2.CascadeClassifier("../viola-johnes-classifier/cascade.xml")
 
 # Load WIDER Face Annotations
 annotations = scipy.io.loadmat("wider_face_split/wider_face_val.mat")
@@ -32,7 +34,7 @@ file_list = annotations["file_list"]
 face_bbx_list = annotations["face_bbx_list"]
 
 # Paths
-wider_face_path = "../WIDER_val/images" 
+wider_face_path = "../data/WIDER_val/images"
 
 # Metrics counters
 total_gt_faces = 0
@@ -50,7 +52,9 @@ for event_idx, event in enumerate(event_list):
     face_bbx = face_bbx_list[event_idx][0]
 
     for img_idx, image_name in enumerate(image_filenames):
-        image_path = os.path.join(wider_face_path, event_name, image_name[0][0] + ".jpg")
+        image_path = os.path.join(
+            wider_face_path, event_name, image_name[0][0] + ".jpg"
+        )
         image = cv2.imread(image_path)
         if image is None:
             continue
@@ -60,10 +64,17 @@ for event_idx, event in enumerate(event_list):
 
         # Ground truth faces
         gt_faces = face_bbx[img_idx][0]  # Ground truth bounding boxes
+
+        # if (
+        #     len(gt_faces) > 1
+        # ):  # Skip all images that have more than one bounding box //TODO
+        #     continue
         total_gt_faces += len(gt_faces)
 
         # Detect faces using Viola-Jones
-        detected_faces = face_cascade.detectMultiScale(gray, scaleFactor=1.15, minNeighbors=3, minSize=(30, 30))
+        detected_faces = face_cascade.detectMultiScale(
+            gray, scaleFactor=1.15, minNeighbors=3, minSize=(30, 30)
+        )
         total_detected_faces += len(detected_faces)
 
         tp_per_image = 0  # Track true positives per image
