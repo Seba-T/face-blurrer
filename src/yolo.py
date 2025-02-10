@@ -15,12 +15,12 @@ from src.constants import (
 def load_yolo_model(cfg_path, weights_path, names_path):
     """
     Load the YOLO model for face detection.
-    
+
     Args:
         cfg_path (str): Path to the YOLO configuration file.
         weights_path (str): Path to the YOLO weights file.
         names_path (str): Path to the file with class names.
-    
+
     Returns:
         net (cv2.dnn.Net): YOLO network.
         classes (list): List of class names.
@@ -29,32 +29,34 @@ def load_yolo_model(cfg_path, weights_path, names_path):
     net = cv2.dnn.readNetFromDarknet(cfg_path, weights_path)
     net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
     net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
-    
+
     # Load class names
     with open(names_path, "r") as f:
         classes = f.read().strip().split("\n")
-    
+
     return net, classes
 
 
 def detect_faces_yolo(image, net, output_layers, conf_threshold=0.5, nms_threshold=0.4):
     """
     Detects faces in an image using YOLO.
-    
+
     Args:
         image (np.array): Input image.
         net (cv2.dnn.Net): YOLO model.
         output_layers (list): Names of the model's output layers.
         conf_threshold (float): Confidence threshold for detections.
         nms_threshold (float): Threshold for Non-Maximum Suppression.
-    
+
     Returns:
         list: List of bounding boxes for detected faces.
     """
     height, width = image.shape[:2]
-    
+
     # Preprocess the image for YOLO
-    blob = cv2.dnn.blobFromImage(image, 1 / 255.0, (416, 416), (0, 0, 0), swapRB=True, crop=False)
+    blob = cv2.dnn.blobFromImage(
+        image, 1 / 255.0, (416, 416), (0, 0, 0), swapRB=True, crop=False
+    )
     net.setInput(blob)
     outputs = net.forward(output_layers)
 
@@ -69,9 +71,11 @@ def detect_faces_yolo(image, net, output_layers, conf_threshold=0.5, nms_thresho
             scores = detection[5:]  # Skip the first 5 elements (x, y, w, h, confidence)
             class_id = np.argmax(scores)
             confidence = scores[class_id]
-            
+
             if confidence > conf_threshold:  # Filter by confidence threshold
-                center_x, center_y, w, h = (detection[0:4] * np.array([width, height, width, height])).astype("int")
+                center_x, center_y, w, h = (
+                    detection[0:4] * np.array([width, height, width, height])
+                ).astype("int")
                 x = int(center_x - w / 2)
                 y = int(center_y - h / 2)
                 boxes.append([x, y, int(w), int(h)])
@@ -84,14 +88,19 @@ def detect_faces_yolo(image, net, output_layers, conf_threshold=0.5, nms_thresho
     # Convert indices to a list of boxes
     final_boxes = []
     if len(indices) > 0:
-        for i in indices.flatten():  # Flatten handles both single and multi-dimensional cases
+        for (
+            i
+        ) in (
+            indices.flatten()
+        ):  # Flatten handles both single and multi-dimensional cases
             final_boxes.append(boxes[i])
 
     return final_boxes
 
 
-
-def process_video_yolo(input_path, output_path, cfg_path, weights_path, names_path, blur_method="gaussian"):
+def process_video_yolo(
+    input_path, output_path, cfg_path, weights_path, names_path, blur_method="gaussian"
+):
     """
     Processes a video to detect and blur faces frame by frame using YOLO.
 
@@ -137,3 +146,61 @@ def process_video_yolo(input_path, output_path, cfg_path, weights_path, names_pa
     video_writer.release()
     cv2.destroyAllWindows()
     print(f"Processed video saved at: {output_path}")
+
+
+def download_yolo_models():
+    """
+    If not already present, downloads the YOLO models from Google Drive, extracts them into the
+    model-weights directory, and then removes the downloaded ZIP files.
+    """
+
+    if (
+        os.path.exists(YOLO_CFG_PATH)
+        and os.path.exists(YOLO_WEIGHTS_PATH)
+        and os.path.exists(YOLO_NAMES_PATH)
+    ):
+        print("YOLO model files already exist, not downloading them again...")
+        return
+
+    print("YOLO model files not found. Downloading them...")
+    # Google Drive file IDs for the two models
+    file_ids = {
+        "yolov3": "13gFDLFhhBqwMw6gf8jVUvNDH2UrgCCrX",  # yolov3-wider_16000.weights.zip
+        "yoloface": "1a_pbXPYNj7_Gi6OxUqNo_T23Dt_9CzOV",  # YOLO_Face.h5.zip
+    }
+
+    # Corresponding output file names
+    output_files = {
+        "yolov3": "yolov3-wider_16000.weights.zip",
+        "yoloface": "YOLO_Face.h5.zip",
+    }
+
+    def download_file(file_id, output_file):
+        """Downloads a file from Google Drive using gdown."""
+        url = f"https://drive.google.com/uc?id={file_id}"
+        print(f"Downloading file from {url}...")
+        gdown.download(url, output_file, quiet=False)
+        print(f"Downloaded {output_file}")
+
+    def unzip_file(zip_file, extract_dir):
+        """Extracts a ZIP file into the specified directory."""
+        if not os.path.exists(extract_dir):
+            os.makedirs(extract_dir)
+        print(f"Extracting {zip_file} into {extract_dir}...")
+        with zipfile.ZipFile(zip_file, "r") as zip_ref:
+            zip_ref.extractall(extract_dir)
+        print("Extraction complete.")
+
+    # Download and unzip each file
+    for key in file_ids:
+        # Download the ZIP file
+        download_file(file_ids[key], output_files[key])
+
+        # Extract the ZIP file
+        unzip_file(output_files[key], YOLO_MAIN_DIR)
+
+        # Remove the ZIP file
+        os.remove(output_files[key])
+        print(f"{output_files[key]} removed.")
+
+    print("All files downloaded and extracted successfully!")

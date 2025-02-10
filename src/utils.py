@@ -1,10 +1,11 @@
 import cv2
 
+
 # Visualize the detected faces
 def draw_faces(image, faces):
     image_copy = image.copy()
-    for (x, y, w, h) in faces:
-        cv2.rectangle(image_copy, (x, y), (x+w, y+h), (0, 0, 255), 2)  
+    for x, y, w, h in faces:
+        cv2.rectangle(image_copy, (x, y), (x + w, y + h), (0, 0, 255), 2)
     return image_copy
 
 
@@ -22,10 +23,10 @@ def blur_faces(image, faces, blur_type="gaussian"):
         numpy.ndarray: The image with blurred faces.
     """
     blurred_image = image.copy()
-    for (x, y, w, h) in faces:
+    for x, y, w, h in faces:
         # Extract the face region
-        face_region = blurred_image[y:y+h, x:x+w]
-        
+        face_region = blurred_image[y : y + h, x : x + w]
+
         if blur_type == "gaussian":
             # Apply Gaussian Blur
             blurred_face = cv2.GaussianBlur(face_region, (51, 51), 30)
@@ -33,37 +34,23 @@ def blur_faces(image, faces, blur_type="gaussian"):
             # Improved Pixelation
             height, width = face_region.shape[:2]
             # Adjust pixel size dynamically based on face size
-            pixel_size = max(4, min(width, height) // 15)  # Smaller value = finer pixelation
+            pixel_size = max(
+                4, min(width, height) // 15
+            )  # Smaller value = finer pixelation
             # Resize down to small resolution and then back up
-            face_region_small = cv2.resize(face_region, (pixel_size, pixel_size), interpolation=cv2.INTER_LINEAR)
-            blurred_face = cv2.resize(face_region_small, (width, height), interpolation=cv2.INTER_NEAREST)
+            face_region_small = cv2.resize(
+                face_region, (pixel_size, pixel_size), interpolation=cv2.INTER_LINEAR
+            )
+            blurred_face = cv2.resize(
+                face_region_small, (width, height), interpolation=cv2.INTER_NEAREST
+            )
         elif blur_type == "median":
             # Apply Median Blur
             blurred_face = cv2.medianBlur(face_region, 51)
         else:
             raise ValueError(f"Unknown blur type: {blur_type}")
-        
+
         # Overwrite the blurred region on the original image
-        blurred_image[y:y+h, x:x+w] = blurred_face
-    
+        blurred_image[y : y + h, x : x + w] = blurred_face
+
     return blurred_image
-
-
-# Function to compute Intersection over Union (IoU) between two bounding boxes
-def compute_iou(boxA, boxB):
-    # Compute intersection coordinates
-    xA = max(boxA[0], boxB[0])
-    yA = max(boxA[1], boxB[1])
-    xB = min(boxA[0] + boxA[2], boxB[0] + boxB[2])
-    yB = min(boxA[1] + boxA[3], boxB[1] + boxB[3])
-
-    # Compute intersection area
-    interArea = max(0, xB - xA) * max(0, yB - yA)
-
-    # Compute areas of both bounding boxes
-    boxAArea = boxA[2] * boxA[3]
-    boxBArea = boxB[2] * boxB[3]
-
-    # Compute IoU
-    iou = interArea / float(boxAArea + boxBArea - interArea)
-    return iou
