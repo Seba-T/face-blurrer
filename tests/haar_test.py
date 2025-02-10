@@ -1,63 +1,10 @@
 import cv2
-import numpy as np
 import os
-import scipy.io
+import sys
+from utils import FaceDetectionAlgorithm
 
-
-# Function to compute Intersection over Union (IoU) between two bounding boxes
-def compute_iou(boxA, boxB):
-    # Compute intersection coordinates
-    xA = max(boxA[0], boxB[0])
-    yA = max(boxA[1], boxB[1])
-    xB = min(boxA[0] + boxA[2], boxB[0] + boxB[2])
-    yB = min(boxA[1] + boxA[3], boxB[1] + boxB[3])
-
-    # Compute intersection area
-    interArea = max(0, xB - xA) * max(0, yB - yA)
-
-    # Compute areas of both bounding boxes
-    boxAArea = boxA[2] * boxA[3]
-    boxBArea = boxB[2] * boxB[3]
-
-    # Compute IoU
-    iou = interArea / float(boxAArea + boxBArea - interArea)
-    return iou
-
-
-# Load Viola-Jones
-face_cascade = cv2.CascadeClassifier("../viola-johnes-classifier/cascade.xml")
-
-# Load WIDER Face Annotations
-annotations = scipy.io.loadmat("wider_face_split/wider_face_val.mat")
-event_list = annotations["event_list"]
-file_list = annotations["file_list"]
-face_bbx_list = annotations["face_bbx_list"]
-
-# Paths
-wider_face_path = "../data/WIDER_val/images"
-
-# Metrics counters
-total_gt_faces = 0
-total_detected_faces = 0
-total_iou = 0
-true_positives = 0
-false_positives = 0
-false_negatives = 0
-iou_threshold = 0.5  # IoU threshold for correct detection
-
-# Iterate over dataset
-for event_idx, event in enumerate(event_list):
-    event_name = event[0][0]
-    image_filenames = file_list[event_idx][0]
-    face_bbx = face_bbx_list[event_idx][0]
-
-    for img_idx, image_name in enumerate(image_filenames):
-        image_path = os.path.join(
-            wider_face_path, event_name, image_name[0][0] + ".jpg"
-        )
-        image = cv2.imread(image_path)
-        if image is None:
-            continue
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from src.constants import VIOLA_JONES_CLASSIFIER_PATH
 
         # Convert to grayscale
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)

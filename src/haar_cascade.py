@@ -1,5 +1,10 @@
 import cv2
 from utils import blur_faces
+from constants import VIOLA_JONES_CLASSIFIER_PATH
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 # Function to detect faces

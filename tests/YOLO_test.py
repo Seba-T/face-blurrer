@@ -1,52 +1,14 @@
 import cv2
-import numpy as np
-import scipy.io
 import os
+import sys
 
-def load_yolo_model(cfg_path, weights_path, names_path):
-    """
-    Load the YOLO model for face detection.
-    
-    Args:
-        cfg_path (str): Path to the YOLO configuration file.
-        weights_path (str): Path to the YOLO weights file.
-        names_path (str): Path to the file with class names.
-    
-    Returns:
-        net (cv2.dnn.Net): YOLO network.
-        classes (list): List of class names.
-    """
-    # Load YOLO model
-    net = cv2.dnn.readNetFromDarknet(cfg_path, weights_path)
-    net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
-    net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
-    
-    # Load class names
-    with open(names_path, "r") as f:
-        classes = f.read().strip().split("\n")
-    
-    return net, classes
-
-def detect_faces_yolo(image, net, output_layers, conf_threshold=0.6, nms_threshold=0.6):
-    """
-    Detects faces in an image using YOLO.
-    
-    Args:
-        image (np.array): Input image.
-        net (cv2.dnn.Net): YOLO model.
-        output_layers (list): Names of the model's output layers.
-        conf_threshold (float): Confidence threshold for detections.
-        nms_threshold (float): Threshold for Non-Maximum Suppression.
-    
-    Returns:
-        list: List of bounding boxes for detected faces.
-    """
-    height, width = image.shape[:2]
-    
-    # Preprocess the image for YOLO
-    blob = cv2.dnn.blobFromImage(image, 1 / 255.0, (416, 416), (0, 0, 0), swapRB=True, crop=False)
-    net.setInput(blob)
-    outputs = net.forward(output_layers)
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from src.yolo import load_yolo_model, download_yolo_models
+from src.constants import (
+    YOLO_CFG_PATH,
+    YOLO_WEIGHTS_PATH,
+    YOLO_NAMES_PATH,
+)
 
     # Initialize lists for boxes, confidences, and class IDs
     boxes = []

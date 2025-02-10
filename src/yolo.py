@@ -1,6 +1,16 @@
 import cv2
 import numpy as np
-from utils import blur_faces
+import os
+import gdown
+import zipfile
+from src.utils import blur_faces
+from src.constants import (
+    YOLO_MAIN_DIR,
+    YOLO_NAMES_PATH,
+    YOLO_CFG_PATH,
+    YOLO_WEIGHTS_PATH,
+)
+
 
 def load_yolo_model(cfg_path, weights_path, names_path):
     """
