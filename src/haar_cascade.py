@@ -10,10 +10,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # Function to detect faces
 def detect_faces(image):
     # Path to the Haar Cascade file
-    haar_cascade_path = "../viola-johnes-classifier/.xml"
 
     # Create the face detector
-    face_cascade = cv2.CascadeClassifier(haar_cascade_path)
+    face_cascade = cv2.CascadeClassifier(VIOLA_JONES_CLASSIFIER_PATH)
 
     # Convert the image to grayscale (required by the Haar algorithm)
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
