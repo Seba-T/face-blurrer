@@ -17,7 +17,7 @@ YOLO_Face.h5
 yolov3-wider_16000.weights
 __MACOSX/
 
-data/testing
+WIDER_val
 data/training
 
 wider_face_test_filelist.txt
@@ -25,3 +25,6 @@ wider_face_test.mat
 wider_face_train_bbx_gt.txt
 wider_face_val_bbx_gt.txt
 wider_face_train.mat
+
+build
+opencv-3.4

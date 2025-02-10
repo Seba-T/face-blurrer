@@ -4,7 +4,7 @@ PROJECT_ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # TESTING
-TESTING_DATA_PATH = os.path.join(PROJECT_ROOT_DIR, "data/testing/images")
+TESTING_DATA_PATH = os.path.join(PROJECT_ROOT_DIR, "WIDER_val/images")
 
 
 # YOLO

@@ -25,3 +25,4 @@ if __name__ == "__main__":
     )
 
     result = viola_jones_algorithm.evaluate()
+    print(result)
