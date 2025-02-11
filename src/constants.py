@@ -20,5 +20,5 @@ YOLO_NAMES_PATH = os.path.join(YOLO_MAIN_DIR, "wider_face.names")
 # VIOLA JONES
 
 VIOLA_JONES_CLASSIFIER_PATH = os.path.join(
-    PROJECT_ROOT_DIR, "viola-johnes-classifier/cascade.xml"
+    PROJECT_ROOT_DIR, "viola-jones-classifier/cascade.xml"
 )
