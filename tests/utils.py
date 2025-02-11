@@ -11,42 +11,45 @@ from src.constants import (
 
 
 class FaceDetectionAlgorithm:
+    """
+    A class used for evaluating a face detection algorithm on the WIDER FACE dataset.
+    It encapsulates both the classifier's name and the detection method, then calculates
+    various metrics such as Precision, Recall, and Average IoU.
+    """
 
     _classifier_name = None
     detect_faces = None
 
     def __init__(self, classifier_name: str, detect_faces):
+        """
+        Initialize the FaceDetectionAlgorithm with the given classifier name and detect_faces method.
+
+        Args:
+            classifier_name (str): Name of the face detection classifier.
+            detect_faces (callable): Function or method to detect faces in an image.
+        """
         self._classifier_name = classifier_name
         self.detect_faces = detect_faces
 
     def evaluate(self) -> str:
         """
-        Test a face detection algorithm on the WIDER FACE dataset.
-
-
-        Args:
-            classifier (cv2.CascadeClassifier): Face detection classifier.
-            classifier_name (str): Name of the classifier.
+        Test the face detection algorithm on the WIDER FACE dataset and compute statistics.
 
         Returns:
-            str: Evaluation results.
+            str: Evaluation results including Precision, Recall, and Average IoU.
         """
-
-        # Load WIDER Face Annotations
         annotations = scipy.io.loadmat("wider_face_split/wider_face_val.mat")
         event_list = annotations["event_list"]
         file_list = annotations["file_list"]
         face_bbx_list = annotations["face_bbx_list"]
 
-        # Metrics counters
         total_gt_faces = 0
         total_detected_faces = 0
         total_iou = 0
         true_positives = 0
         false_positives = 0
         false_negatives = 0
-        iou_threshold = 0.5  # IoU threshold for correct detection
-        iou_scores = []
+        iou_threshold = 0.5
 
         for event_idx, event in enumerate(event_list):
             event_name = event[0][0]
@@ -61,19 +64,13 @@ class FaceDetectionAlgorithm:
                 if image is None:
                     continue
 
-                # # Convert to grayscale
-                # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-                # Ground truth faces
-                gt_faces = face_bbx[img_idx][0]  # Ground truth bounding boxes
-
+                gt_faces = face_bbx[img_idx][0]
                 total_gt_faces += len(gt_faces)
 
-                # Detect faces using Viola-Jones
                 detected_faces = self.detect_faces(image)
                 total_detected_faces += len(detected_faces)
 
-                tp_per_image = 0  # Track true positives per image
+                tp_per_image = 0
 
                 for detected_face in detected_faces:
                     best_iou = 0
@@ -82,20 +79,18 @@ class FaceDetectionAlgorithm:
                         best_iou = max(best_iou, iou)
 
                     if best_iou >= iou_threshold:
-                        tp_per_image += 1  # Only count for this image
+                        tp_per_image += 1
                         total_iou += best_iou
                     else:
                         false_positives += 1
 
-                false_negatives += (
-                    len(gt_faces) - tp_per_image
-                )  # Use per-image TP count
+                false_negatives += len(gt_faces) - tp_per_image
                 true_positives += tp_per_image
 
-        # Compute final statistics
         precision = true_positives / (true_positives + false_positives + 1e-8)
         recall = true_positives / (total_gt_faces + 1e-8)
         avg_iou = total_iou / max(true_positives, 1)
+
         result_str = (
             f"=== {self._classifier_name} Face Detection Evaluation ===\n"
             f"Total Ground Truth Faces: {total_gt_faces}\n"
