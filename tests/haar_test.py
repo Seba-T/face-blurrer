@@ -4,11 +4,11 @@ import sys
 from utils import FaceDetectionAlgorithm
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.constants import VIOLA_JONES_CLASSIFIER_PATH
+from src.constants import HAARCASCADE_CLASSIFIER_PATH
 
 
 if __name__ == "__main__":
-    face_cascade = cv2.CascadeClassifier(VIOLA_JONES_CLASSIFIER_PATH)
+    face_cascade = cv2.CascadeClassifier(HAARCASCADE_CLASSIFIER_PATH)
 
     def viola_jones_classifier(image) -> list:
         # Convert to grayscale

@@ -1,9 +1,12 @@
 import cv2
 import numpy as np
-import os
 import gdown
 import zipfile
-from src.utils import blur_faces
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from src.utils import blur_faces, BlurMethod
 from src.constants import (
     YOLO_MAIN_DIR,
     YOLO_NAMES_PATH,
@@ -12,26 +15,21 @@ from src.constants import (
 )
 
 
-def load_yolo_model(cfg_path, weights_path, names_path):
+def load_yolo_model():
     """
     Load the YOLO model for face detection.
-
-    Args:
-        cfg_path (str): Path to the YOLO configuration file.
-        weights_path (str): Path to the YOLO weights file.
-        names_path (str): Path to the file with class names.
 
     Returns:
         net (cv2.dnn.Net): YOLO network.
         classes (list): List of class names.
     """
     # Load YOLO model
-    net = cv2.dnn.readNetFromDarknet(cfg_path, weights_path)
+    net = cv2.dnn.readNetFromDarknet(YOLO_CFG_PATH, YOLO_WEIGHTS_PATH)
     net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
     net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
 
     # Load class names
-    with open(names_path, "r") as f:
+    with open(YOLO_NAMES_PATH, "r") as f:
         classes = f.read().strip().split("\n")
 
     return net, classes
@@ -99,7 +97,9 @@ def detect_faces_yolo(image, net, output_layers, conf_threshold=0.5, nms_thresho
 
 
 def process_video_yolo(
-    input_path, output_path, cfg_path, weights_path, names_path, blur_method="gaussian"
+    input_path,
+    output_path,
+    blur_method=BlurMethod.GAUSSIAN,
 ):
     """
     Processes a video to detect and blur faces frame by frame using YOLO.
@@ -107,13 +107,13 @@ def process_video_yolo(
     Args:
         input_path (str): Path to the input video.
         output_path (str): Path to the output video.
-        cfg_path (str): Path to the YOLO configuration file.
-        weights_path (str): Path to the YOLO weights file.
-        names_path (str): Path to the YOLO names file.
-        blur_method (str): Blurring method ('gaussian', 'pixelation', 'median').
+        blur_method (BlurMethod): Blurring method (BlurMethod.GAUSSIAN, BlurMethod.PIXELATION, BlurMethod.MEDIAN).
+
+    Returns:
+        None
     """
     # Load the YOLOv3 model
-    yolo_net, yolo_classes = load_yolo_model(cfg_path, weights_path, names_path)
+    yolo_net, yolo_classes = load_yolo_model()
     output_layers = yolo_net.getUnconnectedOutLayersNames()
 
     # Open the video file

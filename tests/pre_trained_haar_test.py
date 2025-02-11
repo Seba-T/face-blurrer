@@ -1,8 +1,9 @@
 import cv2
 from utils import FaceDetectionAlgorithm
+from src.constants import PRE_TRAINED_HAARCASCADE_CLASSIFIER_PATH
 
 if __name__ == "__main__":
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    face_cascade = cv2.CascadeClassifier(PRE_TRAINED_HAARCASCADE_CLASSIFIER_PATH)
 
     def preTrained_viola_jones_classifier(image) -> list:
         # Convert to grayscale

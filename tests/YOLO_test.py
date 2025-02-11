@@ -5,11 +5,7 @@ import numpy as np
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.yolo import load_yolo_model, download_yolo_models
-from src.constants import (
-    YOLO_CFG_PATH,
-    YOLO_WEIGHTS_PATH,
-    YOLO_NAMES_PATH,
-)
+
 from utils import FaceDetectionAlgorithm
 
 
@@ -18,9 +14,7 @@ if __name__ == "__main__":
     # Download YOLO models if they are not present
     download_yolo_models()
 
-    yolo_net, yolo_classes = load_yolo_model(
-        YOLO_CFG_PATH, YOLO_WEIGHTS_PATH, YOLO_NAMES_PATH
-    )
+    yolo_net, yolo_classes = load_yolo_model()
     output_layers = yolo_net.getUnconnectedOutLayersNames()
     conf_threshold = 0.6
     nms_threshold = 0.6

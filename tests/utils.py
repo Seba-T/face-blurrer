@@ -6,7 +6,7 @@ import sys
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.constants import (
-    TESTING_DATA_PATH,
+    TEST_DATASET_PATH,
 )
 
 
@@ -55,7 +55,7 @@ class FaceDetectionAlgorithm:
 
             for img_idx, image_name in enumerate(image_filenames):
                 image_path = os.path.join(
-                    TESTING_DATA_PATH, event_name, image_name[0][0] + ".jpg"
+                    TEST_DATASET_PATH, event_name, image_name[0][0] + ".jpg"
                 )
                 image = cv2.imread(image_path)
                 if image is None:
