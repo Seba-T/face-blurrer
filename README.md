@@ -36,7 +36,7 @@ This project supports testing against the WIDER Face dataset. To enable this, yo
      ```
      FACE-BLURRER/
      ├── ... other files and directories ...
-     └── WIDER_val/
+     └── data/testing/images
          ├── 0--Parade/
          │   ├── 0--Parade_0_904.jpg
          │   ├── 0--Parade_1_100.jpg

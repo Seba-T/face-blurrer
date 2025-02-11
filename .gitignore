@@ -19,7 +19,6 @@ __MACOSX/
 
 data/testing
 data/training
-WIDER_val/
 
 wider_face_test_filelist.txt
 wider_face_test.mat
