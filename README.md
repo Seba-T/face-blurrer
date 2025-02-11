@@ -30,8 +30,8 @@ This project supports testing against the WIDER Face dataset. To enable this, yo
 
 2. **Directory Structure:**
 
-   - In the root directory of your `FACE-BLURRER` project, create a directory named `WIDER_val`.  If this directory already exists from a previous run and you want to use fresh data, ensure it's empty.
-   - Place the downloaded validation images *directly* inside the `WIDER_val` directory.  The resulting structure should resemble the following:
+   - In the root directory of your `FACE-BLURRER` project, create a directory named `testing` in the `data` folder.  If this directory already exists from a previous run and you want to use fresh data, ensure it's empty.
+   - Place the downloaded validation images *directly* inside the `testing` directory.  The resulting structure should resemble the following:
 
      ```
      FACE-BLURRER/
