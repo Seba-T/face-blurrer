@@ -15,7 +15,7 @@ if __name__ == "__main__":
         )
 
     viola_jones_algorithm = FaceDetectionAlgorithm(
-        classifier_name="Viola-Jones",
+        classifier_name="Pre Trained Viola-Jones",
         detect_faces=preTrained_viola_jones_classifier,
     )
 
