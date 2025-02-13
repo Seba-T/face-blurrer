@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
         # Detect faces using Viola-Jones
         return face_cascade.detectMultiScale(
-            gray, scaleFactor=1.15, minNeighbors=3, minSize=(30, 30)
+            gray, scaleFactor=1.07, minNeighbors=4, minSize=(30, 30)
         )
 
     viola_jones_algorithm = FaceDetectionAlgorithm(

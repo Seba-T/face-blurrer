@@ -1,0 +1,49 @@
+=== Custom Trained Viola-Jones Face Detection Evaluation ===
+Scale-Factor: 1.1
+minNeighbour: 5
+
+Total Ground Truth Faces: 39708
+Total Detected Faces: 47555
+True Positives: 3063
+False Positives: 44492
+False Negatives: 36645
+Precision: 0.0644
+Recall: 0.0771
+Average IoU: 0.6839
+
+[runlim] time:                  7721.14 seconds -> 1157.34 real seconds
+[runlim] space:                 328.4 MB
+
+=== Custom Trained Viola-Jones Face Detection Evaluation ===
+Scale-Factor: 1.07
+minNeighbour: 4
+
+Total Ground Truth Faces: 39708
+Total Detected Faces: 73439
+True Positives: 4036
+False Positives: 69403
+False Negatives: 35672
+Precision: 0.0550
+Recall: 0.1016
+Average IoU: 0.6798
+
+[runlim] time:                  10085.16 seconds -> 1517.35 real seconds
+[runlim] space:                 404.4 MB
+
+
+=== Custom Trained Viola-Jones Face Detection Evaluation ===
+Scale-Factor: 1.15
+minNeighbour: 3
+
+Total Ground Truth Faces: 39708
+Total Detected Faces: 61988
+True Positives: 3474
+False Positives: 58514
+False Negatives: 36234
+Precision: 0.0560
+Recall: 0.0875
+Average IoU: 0.6819
+
+[runlim] time:                  5990.85 seconds -> 894.56 real seconds
+[runlim] space:                 273.7 MB
+
