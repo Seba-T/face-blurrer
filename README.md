@@ -1,60 +1,274 @@
-# Face Blurring Project
+<!-- ========================================================= -->
+<!-- HERO -->
+<!-- ========================================================= -->
+<p align="center">
 
-A Python project to detect faces using the Viola-Jones algorithm and apply blurring effects for privacy protection.
+# 🎭 Face Privacy
+### Real-Time Face Detection & GDPR-Compliant Face Anonymization
 
-## Requirements
+### Comparing Classical Computer Vision with Modern Deep Learning
 
-- Python 3.8+
-- Opencv-python
-- Numpy
-- Matplotlib
-- Ipykernel
-- Jupyter
-- Requests
-- Gdown
-- Scipy
+<img src="sources/land.gif" width="900"/>
 
-## Installation
+</p>
+
+<p align="center">
+
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![OpenCV](https://img.shields.io/badge/OpenCV-Computer_Vision-green)
+![YOLO](https://img.shields.io/badge/YOLO-Deep_Learning-red)
+![License](https://img.shields.io/badge/License-MIT-orange)
+
+</p>
+
+---
+
+## 🚀 Overview
+
+This project explores **privacy-preserving face anonymization** by comparing a traditional Computer Vision algorithm (**Viola-Jones**) with a modern Deep Learning detector (**YOLO**).
+
+The repository includes:
+
+- 🔍 Face detection
+- 🎭 Face anonymization
+- 📊 Performance benchmarking
+- 🧠 Custom-trained Viola-Jones model
+- 🎥 Image & video processing
+- 📈 Experimental comparison on the WIDER FACE dataset
+
+The primary goal is to understand the **trade-off between detection accuracy, computational cost and real-time performance**.
+
+---
+
+# ✨ Features
+
+- ✅ Real-time face detection
+- ✅ YOLO implementation
+- ✅ Custom-trained Viola-Jones classifier
+- ✅ Gaussian Blur
+- ✅ Median Blur
+- ✅ Pixelation
+- ✅ Image processing
+- ✅ Video processing
+- ✅ WIDER FACE benchmarking
+- ✅ Precision / Recall / IoU evaluation
+- ✅ Processing time comparison
+
+---
+
+
+# 🏗 Project Pipeline
+```
+Input Image / Video
+          │
+          ▼
+ Face Detection
+ ├── Viola-Jones
+ └── YOLO
+          │
+          ▼
+ Face Localization
+          │
+          ▼
+ Blur Engine
+ ├── Gaussian
+ ├── Median
+ └── Pixelation
+          │
+          ▼
+ Privacy Protected Output
+```
+---
+
+# 🔬 Algorithms
+
+## 🎻 Viola-Jones
+
+A classical Haar Cascade detector optimized for CPU execution.
+
+### Strengths
+
+- ⚡ Extremely fast
+- 💻 CPU friendly
+- 🪶 Low memory usage
+
+### Weaknesses
+
+- ❌ Sensitive to lighting
+- ❌ Poor robustness to occlusions
+- ❌ Lower recall on difficult datasets
+
+---
+
+## 🤖 YOLO
+
+A modern Deep Learning detector capable of robust face localization.
+
+### Strengths
+
+- 🎯 High accuracy
+- 👥 Excellent multi-face detection
+- 🌙 Robust under challenging conditions
+
+### Weaknesses
+
+- 🖥 Requires GPU for real-time inference
+- 💾 Higher memory consumption
+
+---
+
+# 🎭 Face Anonymization Techniques
+
+<p align="left">
+<img src="sources/blur_comparison.png" width="900">
+</p>
+
+| Technique | Description | Speed | Privacy |
+|------------|------------|--------|---------|
+| Gaussian Blur | Natural-looking anonymization | ⭐⭐⭐⭐ | ⭐⭐⭐ |
+| Median Blur | Strong distortion | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| Pixelation | Block-based anonymization | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
+
+---
+
+# 📊 Benchmark
+
+The algorithms were evaluated on the **WIDER FACE** validation dataset.
+
+Metrics include:
+
+- Precision
+- Recall
+- IoU
+- Processing Time
+- Memory Usage
+
+---
+
+## Benchmark Results
+
+
+| Algorithm | Precision | Recall | IoU | Time |
+|------------|----------|--------|------|------|
+| Viola-Jones | 0.6648 | 0.1288 | 0.6873 | 8.58 min
+| YOLO | 0.8443 | 0.4584 | 0.7322 | 22.70 min
+
+<p align="left">
+<img src="sources/performance.png" width="900">
+</p>
+
+---
+
+# ⚙ Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/<username>/<repository>.git
+
+cd <repository>
+```
+
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage
+---
 
-To understand how to use the implemented face detection and blurring algorithms, refer to the Jupyter notebook available in the `notebook` directory.  
+# 🚀 Quick Start
 
-### Interactive Guide with Jupyter Notebook
-The file `face_blur.ipynb` provides a step-by-step explanation of how to correctly use the functionalities contained in the `src` directory. It covers:  
-- Loading and setting up the required models (Viola-Jones and YOLO).  
-- Running face detection on images and applying different blurring techniques.  
-- Performing video blurring on sample videos provided in the data/raw/ directory to test the effectiveness of the algorithms in real-world scenarios.
+Launch the notebook
 
-To launch the notebook, navigate to the project directory and run the notebook. For further details, please refer to the documentation and comments inside the notebook.
+```bash
+jupyter notebook
+```
 
-## WIDER Face Dataset for Testing
+Open
 
-This project supports testing against the WIDER Face dataset. To enable this, you need to download the WIDER Face validation images and organize them correctly.
+```
+notebook/face_blur.ipynb
+```
 
-1. **Download:** Obtain the "WIDER Face Validation Images" from [http://shuoyang1213.me/WIDERFACE/](http://shuoyang1213.me/WIDERFACE/).
+The notebook provides a complete walkthrough of:
 
-2. **Unzip:**
+- Loading YOLO
+- Loading Viola-Jones
+- Running face detection
+- Applying blur techniques
+- Processing videos
+- Benchmarking
 
-   - In the root directory of your `FACE-BLURRER` project, decompress the zip file just downloaded. You should now have a directory named `WIDER_val`. If this directory already exists from a previous run and you want to use fresh data, ensure it's empty. The resulting directory structure should appear as follows:
+---
 
-     ```
-     FACE-BLURRER/
-     ├── ... other files and directories ...
-     └── WIDER_val/images
-         ├── 0--Parade/
-         │   ├── 0--Parade_0_904.jpg
-         │   ├── 0--Parade_1_100.jpg
-         │   └── ... more images ...
-         ├── 1--Handclapping/
-         │   ├── ... images ...
-         └── ... more subdirectories ...
-     ```
+# 📥 Dataset
 
-3. **Usage:**
+The benchmark uses the **WIDER FACE** dataset.
 
-   After placing the images in the correct location, you can execute the provided test scripts (e.g., `YOLO_test.py`). These scripts are designed to utilize the WIDER Face validation set. For specific execution instructions, please consult the project's documentation or the comments within the test scripts themselves.
+Extract the validation images into
+
+```text
+WIDER_val/
+```
+
+The testing scripts automatically use this directory.
+
+---
+
+# 🧪 Experimental Setup
+
+Dataset
+
+- WIDER FACE Validation Set
+
+Evaluation Metrics
+
+- Precision
+- Recall
+- IoU
+- Processing Time
+
+Benchmark Tool
+
+- Runlim
+
+---
+
+# 💡 What I Learned
+
+This project allowed me to gain practical experience with:
+
+- Classical Computer Vision
+- Haar Cascade training
+- OpenCV internals
+- YOLO inference
+- Deep Learning vs Classical approaches
+- Dataset preparation
+- Performance benchmarking
+- Privacy-preserving AI
+
+---
+
+# 📚 References
+
+- OpenCV
+- YOLO
+- WIDER FACE Dataset
+- Runlim
+
+---
+
+# ⭐ Support
+
+If you found this repository useful, consider giving it a ⭐ on GitHub.
+
+Contributions, suggestions and discussions are always welcome.
+
+---
+
+<p align="center">
+
+Made with ❤️ using Python, OpenCV and Deep Learning
+
+</p>
